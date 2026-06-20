@@ -1,8 +1,8 @@
 @0xa0d78d3689d48a0b;
 
-using import "enums.capnp".EnumType2;
-using import "struct.capnp".S1;
-using Lua = import "lua.capnp";
+using import "enums.zap".EnumType2;
+using import "struct.zap".S1;
+using Lua = import "lua.zap";
 
 const pi :Float32 = 3.14159;
 

@@ -27,12 +27,12 @@ function _M.lower_space_naming(name)
     return lower(gsub(name, "(%u+)", " %1"))
 end
 
--- capnp only allow camel naming for enums
+-- zap only allow camel naming for enums
 function _M.camel_naming(name)
     return name
 end
 
-function _M.parse_capnp_txt(s)
+function _M.parse_zap_txt(s)
     s = gsub(s, "%(", "{")
     s = gsub(s, "%)", "}")
     s = gsub(s, "%[", "{")
@@ -49,7 +49,7 @@ function _M.parse_capnp_txt(s)
     return s
 end
 
-function _M.parse_capnp_decode_txt(infile)
+function _M.parse_zap_decode_txt(infile)
     local f = io.open(infile)
     if not f then
         return nil, "Can't open file: " .. tostring(infile)
@@ -58,7 +58,7 @@ function _M.parse_capnp_decode_txt(infile)
     local s = f:read("*a")
     f:close()
 
-    return _M.parse_capnp_txt(s)
+    return _M.parse_zap_txt(s)
 end
 
 function _M.table_diff(t1, t2, namespace)
@@ -114,7 +114,7 @@ function _M.write_file(name, content)
 end
 
 function _M.get_output_name(schema)
-    return string.gsub(schema.requestedFiles[1].filename, "%.capnp", "_capnp")
+    return string.gsub(schema.requestedFiles[1].filename, "%.zap", "_zap")
 end
 
 function _M.hex_buf_str(buf, len)

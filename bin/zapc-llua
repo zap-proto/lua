@@ -1,0 +1,23 @@
+#!/usr/bin/env luajit
+
+--package.path="lua/?.lua;;"
+
+local schema_zap = require("schema_zap")
+local compile = require("zap.compile")
+local util = require("zap.util")
+
+local schema_json_file  = "llua.schema.json"
+
+local content = io.stdin:read("*a")
+local schema = assert(schema_zap.CodeGeneratorRequest.parse(content))
+
+schema.__compiler = "lua-zap(decoded by lua)"
+-- Optional debug dump of the decoded schema; cjson is not required to run.
+local ok, cjson = pcall(require, "cjson")
+if ok then
+    util.write_file(schema_json_file, cjson.encode(schema))
+end
+local res = compile.compile(schema)
+
+local outfile = util.get_output_name(schema) .. ".llua"
+util.write_file(outfile, res)

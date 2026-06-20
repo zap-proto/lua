@@ -1,33 +1,16 @@
 #!/bin/bash
 
-export PATH=$(pwd)/bin:$PATH
-export LUA_PATH="?.lua;lua/?.lua;proto/?.lua;tests/?.lua;$LUA_PATH;;"
+# Top-level test entry. The vendored lunitx framework lives under vendor/, so
+# the only external tool the full suite needs is the `zap` schema compiler,
+# used to generate proto/example_zap.lua for tests 01 and 10.
+# tests/run_tests.sh generates that module when `zap` is on PATH and otherwise
+# skips those two tests with a note rather than fail.
 
-echo "[Compile example.capnp]"
-capnp --verbose compile -olua proto/example.capnp proto/enums.capnp proto/lua.capnp proto/struct.capnp || exit
+set -e
+ROOT=$(cd "$(dirname "$0")" && pwd)
+export PATH="$ROOT/bin:$PATH"
 
-echo "[Unit test...]"
-make test  || exit
-
-#Disabled for now
-#echo "[capnp_test...]"
-#make test1 || exit
-
-#echo
-#echo "[Serialization test...]"
-#if [ $(uname) != "Linux" ]; then
-#    make all || exit
-#else
-#    CXX=g++-4.7 make all || exit
-#
-#fi
-#cpp/main > a.data || exit
-#luajit test.lua c.data || exit
-#echo
-#echo "capnp c++ result:"
-#xxd -g 1 a.data || exit
-#echo "capnp lua result:"
-#xxd -g 1 c.data || exit
-#diff a.data c.data
+echo "[Unit tests]"
+"$ROOT/tests/run_tests.sh"
 
 echo "[Done]"

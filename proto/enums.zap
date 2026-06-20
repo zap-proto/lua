@@ -1,6 +1,6 @@
 @0xa7e0ba9e3ca0988d;
 
-using Lua = import "lua.capnp";
+using Lua = import "lua.zap";
 
 enum EnumType2 $Lua.naming("lower_underscore") {
     none @0;

@@ -1,20 +1,20 @@
 -- require "luacov"
 local ffi = require "ffi"
-local capnp = require "capnp"
+local zap = require "zap"
 local bit = require "bit"
-local util = require "capnp.util"
+local util = require "zap.util"
 
 local ceil              = math.ceil
-local write_val         = capnp.write_val
-local read_val          = capnp.read_val
-local get_enum_val      = capnp.get_enum_val
-local get_data_off      = capnp.get_data_off
-local write_listp_buf   = capnp.write_listp_buf
-local write_structp_buf = capnp.write_structp_buf
-local write_structp     = capnp.write_structp
-local parse_struct_buf  = capnp.parse_struct_buf
-local parse_listp_buf   = capnp.parse_listp_buf
-local parse_list_data   = capnp.parse_list_data
+local write_val         = zap.write_val
+local read_val          = zap.read_val
+local get_enum_val      = zap.get_enum_val
+local get_data_off      = zap.get_data_off
+local write_listp_buf   = zap.write_listp_buf
+local write_structp_buf = zap.write_structp_buf
+local write_structp     = zap.write_structp
+local parse_struct_buf  = zap.parse_struct_buf
+local parse_listp_buf   = zap.parse_listp_buf
+local parse_list_data   = zap.parse_list_data
 local ffi_new           = ffi.new
 local ffi_string        = ffi.string
 local ffi_cast          = ffi.cast
@@ -50,7 +50,7 @@ local _M = new_tab(2, 8)
 
 _M.Node = {
     id = 16610026722781537303,
-    displayName = "proto/schema.capnp:Node",
+    displayName = "proto/schema.zap:Node",
     dataWordCount = 5,
     pointerCount = 5,
     discriminantCount = 6,
@@ -116,7 +116,7 @@ _M.Node = {
             local data_off = get_data_off(_M.Node, 1, pos)
 
             -- write tag
-            capnp.write_composite_tag(buf + pos, _M.Node.NestedNode, num)
+            zap.write_composite_tag(buf + pos, _M.Node.NestedNode, num)
             pos = pos + 8 -- tag
 
             -- write data
@@ -132,7 +132,7 @@ _M.Node = {
             local data_off = get_data_off(_M.Node, 2, pos)
 
             -- write tag
-            capnp.write_composite_tag(buf + pos, _M.Annotation, num)
+            zap.write_composite_tag(buf + pos, _M.Annotation, num)
             pos = pos + 8 -- tag
 
             -- write data
@@ -251,7 +251,7 @@ _M.Node = {
         local off, size, words = parse_listp_buf(buf, header, _M.Node, 1)
         if off and words then
             local start = (5 + 1 + 1 + off) * 2-- dataWordCount + offset + pointerSize + off
-            local num, dt, pt = capnp.read_composite_tag(buf + start)
+            local num, dt, pt = zap.read_composite_tag(buf + start)
             start = start + 2 -- 2 * 32bit
             if not s.nestedNodes then
                 s.nestedNodes = new_tab(num, 0)
@@ -270,7 +270,7 @@ _M.Node = {
         local off, size, words = parse_listp_buf(buf, header, _M.Node, 2)
         if off and words then
             local start = (5 + 2 + 1 + off) * 2-- dataWordCount + offset + pointerSize + off
-            local num, dt, pt = capnp.read_composite_tag(buf + start)
+            local num, dt, pt = zap.read_composite_tag(buf + start)
             start = start + 2 -- 2 * 32bit
             if not s.annotations then
                 s.annotations = new_tab(num, 0)
@@ -386,7 +386,7 @@ _M.Node = {
 }
 _M.Node.NestedNode = {
     id = 16050641862814319170,
-    displayName = "proto/schema.capnp:Node.NestedNode",
+    displayName = "proto/schema.zap:Node.NestedNode",
     dataWordCount = 1,
     pointerCount = 1,
     calc_size_struct = function(data)
@@ -484,7 +484,7 @@ _M.Node.NestedNode = {
 }
 _M.Node.struct = {
     id = 11430331134483579957,
-    displayName = "proto/schema.capnp:Node.struct",
+    displayName = "proto/schema.zap:Node.struct",
     dataWordCount = 5,
     pointerCount = 5,
     isGroup = true,
@@ -526,7 +526,7 @@ _M.Node.struct = {
             local data_off = get_data_off(_M.Node.struct, 3, pos)
 
             -- write tag
-            capnp.write_composite_tag(buf + pos, _M.Field, num)
+            zap.write_composite_tag(buf + pos, _M.Field, num)
             pos = pos + 8 -- tag
 
             -- write data
@@ -553,7 +553,7 @@ _M.Node.struct = {
         local off, size, words = parse_listp_buf(buf, header, _M.Node.struct, 3)
         if off and words then
             local start = (5 + 3 + 1 + off) * 2-- dataWordCount + offset + pointerSize + off
-            local num, dt, pt = capnp.read_composite_tag(buf + start)
+            local num, dt, pt = zap.read_composite_tag(buf + start)
             start = start + 2 -- 2 * 32bit
             if not s.fields then
                 s.fields = new_tab(num, 0)
@@ -573,7 +573,7 @@ _M.Node.struct = {
 }
 _M.Node.enum = {
     id = 13063450714778629528,
-    displayName = "proto/schema.capnp:Node.enum",
+    displayName = "proto/schema.zap:Node.enum",
     dataWordCount = 5,
     pointerCount = 5,
     isGroup = true,
@@ -586,7 +586,7 @@ _M.Node.enum = {
             local data_off = get_data_off(_M.Node.enum, 3, pos)
 
             -- write tag
-            capnp.write_composite_tag(buf + pos, _M.Enumerant, num)
+            zap.write_composite_tag(buf + pos, _M.Enumerant, num)
             pos = pos + 8 -- tag
 
             -- write data
@@ -606,7 +606,7 @@ _M.Node.enum = {
         local off, size, words = parse_listp_buf(buf, header, _M.Node.enum, 3)
         if off and words then
             local start = (5 + 3 + 1 + off) * 2-- dataWordCount + offset + pointerSize + off
-            local num, dt, pt = capnp.read_composite_tag(buf + start)
+            local num, dt, pt = zap.read_composite_tag(buf + start)
             start = start + 2 -- 2 * 32bit
             if not s.enumerants then
                 s.enumerants = new_tab(num, 0)
@@ -626,7 +626,7 @@ _M.Node.enum = {
 }
 _M.Node.interface = {
     id = 16728431493453586831,
-    displayName = "proto/schema.capnp:Node.interface",
+    displayName = "proto/schema.zap:Node.interface",
     dataWordCount = 5,
     pointerCount = 5,
     isGroup = true,
@@ -639,7 +639,7 @@ _M.Node.interface = {
             local data_off = get_data_off(_M.Node.interface, 3, pos)
 
             -- write tag
-            capnp.write_composite_tag(buf + pos, _M.Method, num)
+            zap.write_composite_tag(buf + pos, _M.Method, num)
             pos = pos + 8 -- tag
 
             -- write data
@@ -659,7 +659,7 @@ _M.Node.interface = {
         local off, size, words = parse_listp_buf(buf, header, _M.Node.interface, 3)
         if off and words then
             local start = (5 + 3 + 1 + off) * 2-- dataWordCount + offset + pointerSize + off
-            local num, dt, pt = capnp.read_composite_tag(buf + start)
+            local num, dt, pt = zap.read_composite_tag(buf + start)
             start = start + 2 -- 2 * 32bit
             if not s.methods then
                 s.methods = new_tab(num, 0)
@@ -679,7 +679,7 @@ _M.Node.interface = {
 }
 _M.Node.const = {
     id = 12793219851699983392,
-    displayName = "proto/schema.capnp:Node.const",
+    displayName = "proto/schema.zap:Node.const",
     dataWordCount = 5,
     pointerCount = 5,
     isGroup = true,
@@ -733,7 +733,7 @@ _M.Node.const = {
 }
 _M.Node.annotation = {
     id = 17011813041836786320,
-    displayName = "proto/schema.capnp:Node.annotation",
+    displayName = "proto/schema.zap:Node.annotation",
     dataWordCount = 5,
     pointerCount = 5,
     isGroup = true,
@@ -841,7 +841,7 @@ _M.Node.annotation = {
 }
 _M.Field = {
     id = 11145653318641710175,
-    displayName = "proto/schema.capnp:Field",
+    displayName = "proto/schema.zap:Field",
     dataWordCount = 3,
     pointerCount = 4,
     discriminantCount = 2,
@@ -889,7 +889,7 @@ _M.Field = {
             local data_off = get_data_off(_M.Field, 1, pos)
 
             -- write tag
-            capnp.write_composite_tag(buf + pos, _M.Annotation, num)
+            zap.write_composite_tag(buf + pos, _M.Annotation, num)
             pos = pos + 8 -- tag
 
             -- write data
@@ -983,7 +983,7 @@ _M.Field = {
         local off, size, words = parse_listp_buf(buf, header, _M.Field, 1)
         if off and words then
             local start = (3 + 1 + 1 + off) * 2-- dataWordCount + offset + pointerSize + off
-            local num, dt, pt = capnp.read_composite_tag(buf + start)
+            local num, dt, pt = zap.read_composite_tag(buf + start)
             start = start + 2 -- 2 * 32bit
             if not s.annotations then
                 s.annotations = new_tab(num, 0)
@@ -1063,7 +1063,7 @@ _M.Field = {
 }
 _M.Field.slot = {
     id = 14133145859926553711,
-    displayName = "proto/schema.capnp:Field.slot",
+    displayName = "proto/schema.zap:Field.slot",
     dataWordCount = 3,
     pointerCount = 4,
     isGroup = true,
@@ -1123,7 +1123,7 @@ _M.Field.slot = {
 }
 _M.Field.group = {
     id = 14626792032033250577,
-    displayName = "proto/schema.capnp:Field.group",
+    displayName = "proto/schema.zap:Field.group",
     dataWordCount = 3,
     pointerCount = 4,
     isGroup = true,
@@ -1147,7 +1147,7 @@ _M.Field.group = {
 }
 _M.Field.ordinal = {
     id = 13515537513213004774,
-    displayName = "proto/schema.capnp:Field.ordinal",
+    displayName = "proto/schema.zap:Field.ordinal",
     dataWordCount = 3,
     pointerCount = 4,
     discriminantCount = 2,
@@ -1211,7 +1211,7 @@ _M.Field.ordinal = {
 }
 _M.Enumerant = {
     id = 10919677598968879693,
-    displayName = "proto/schema.capnp:Enumerant",
+    displayName = "proto/schema.zap:Enumerant",
     dataWordCount = 1,
     pointerCount = 2,
     calc_size_struct = function(data)
@@ -1257,7 +1257,7 @@ _M.Enumerant = {
             local data_off = get_data_off(_M.Enumerant, 1, pos)
 
             -- write tag
-            capnp.write_composite_tag(buf + pos, _M.Annotation, num)
+            zap.write_composite_tag(buf + pos, _M.Annotation, num)
             pos = pos + 8 -- tag
 
             -- write data
@@ -1303,7 +1303,7 @@ _M.Enumerant = {
         local off, size, words = parse_listp_buf(buf, header, _M.Enumerant, 1)
         if off and words then
             local start = (1 + 1 + 1 + off) * 2-- dataWordCount + offset + pointerSize + off
-            local num, dt, pt = capnp.read_composite_tag(buf + start)
+            local num, dt, pt = zap.read_composite_tag(buf + start)
             start = start + 2 -- 2 * 32bit
             if not s.annotations then
                 s.annotations = new_tab(num, 0)
@@ -1352,7 +1352,7 @@ _M.Enumerant = {
 }
 _M.Method = {
     id = 10736806783679155584,
-    displayName = "proto/schema.capnp:Method",
+    displayName = "proto/schema.zap:Method",
     dataWordCount = 1,
     pointerCount = 4,
     calc_size_struct = function(data)
@@ -1410,7 +1410,7 @@ _M.Method = {
             local data_off = get_data_off(_M.Method, 1, pos)
 
             -- write tag
-            capnp.write_composite_tag(buf + pos, _M.Method.Param, num)
+            zap.write_composite_tag(buf + pos, _M.Method.Param, num)
             pos = pos + 8 -- tag
 
             -- write data
@@ -1437,7 +1437,7 @@ _M.Method = {
             local data_off = get_data_off(_M.Method, 3, pos)
 
             -- write tag
-            capnp.write_composite_tag(buf + pos, _M.Annotation, num)
+            zap.write_composite_tag(buf + pos, _M.Annotation, num)
             pos = pos + 8 -- tag
 
             -- write data
@@ -1483,7 +1483,7 @@ _M.Method = {
         local off, size, words = parse_listp_buf(buf, header, _M.Method, 1)
         if off and words then
             local start = (1 + 1 + 1 + off) * 2-- dataWordCount + offset + pointerSize + off
-            local num, dt, pt = capnp.read_composite_tag(buf + start)
+            local num, dt, pt = zap.read_composite_tag(buf + start)
             start = start + 2 -- 2 * 32bit
             if not s.params then
                 s.params = new_tab(num, 0)
@@ -1515,7 +1515,7 @@ _M.Method = {
         local off, size, words = parse_listp_buf(buf, header, _M.Method, 3)
         if off and words then
             local start = (1 + 3 + 1 + off) * 2-- dataWordCount + offset + pointerSize + off
-            local num, dt, pt = capnp.read_composite_tag(buf + start)
+            local num, dt, pt = zap.read_composite_tag(buf + start)
             start = start + 2 -- 2 * 32bit
             if not s.annotations then
                 s.annotations = new_tab(num, 0)
@@ -1564,7 +1564,7 @@ _M.Method = {
 }
 _M.Method.Param = {
     id = 14681955158633610486,
-    displayName = "proto/schema.capnp:Method.Param",
+    displayName = "proto/schema.zap:Method.Param",
     dataWordCount = 0,
     pointerCount = 4,
     calc_size_struct = function(data)
@@ -1625,7 +1625,7 @@ _M.Method.Param = {
             local data_off = get_data_off(_M.Method.Param, 3, pos)
 
             -- write tag
-            capnp.write_composite_tag(buf + pos, _M.Annotation, num)
+            zap.write_composite_tag(buf + pos, _M.Annotation, num)
             pos = pos + 8 -- tag
 
             -- write data
@@ -1694,7 +1694,7 @@ _M.Method.Param = {
         local off, size, words = parse_listp_buf(buf, header, _M.Method.Param, 3)
         if off and words then
             local start = (0 + 3 + 1 + off) * 2-- dataWordCount + offset + pointerSize + off
-            local num, dt, pt = capnp.read_composite_tag(buf + start)
+            local num, dt, pt = zap.read_composite_tag(buf + start)
             start = start + 2 -- 2 * 32bit
             if not s.annotations then
                 s.annotations = new_tab(num, 0)
@@ -1743,7 +1743,7 @@ _M.Method.Param = {
 }
 _M.Type = {
     id = 15020482145304562784,
-    displayName = "proto/schema.capnp:Type",
+    displayName = "proto/schema.zap:Type",
     dataWordCount = 2,
     pointerCount = 1,
     discriminantCount = 19,
@@ -2069,7 +2069,7 @@ _M.Type = {
 }
 _M.Type.list = {
     id = 9792858745991129751,
-    displayName = "proto/schema.capnp:Type.list",
+    displayName = "proto/schema.zap:Type.list",
     dataWordCount = 2,
     pointerCount = 1,
     isGroup = true,
@@ -2105,7 +2105,7 @@ _M.Type.list = {
 }
 _M.Type.enum = {
     id = 11389172934837766057,
-    displayName = "proto/schema.capnp:Type.enum",
+    displayName = "proto/schema.zap:Type.enum",
     dataWordCount = 2,
     pointerCount = 1,
     isGroup = true,
@@ -2129,7 +2129,7 @@ _M.Type.enum = {
 }
 _M.Type.struct = {
     id = 12410354185295152851,
-    displayName = "proto/schema.capnp:Type.struct",
+    displayName = "proto/schema.zap:Type.struct",
     dataWordCount = 2,
     pointerCount = 1,
     isGroup = true,
@@ -2153,7 +2153,7 @@ _M.Type.struct = {
 }
 _M.Type.interface = {
     id = 17116997365232503999,
-    displayName = "proto/schema.capnp:Type.interface",
+    displayName = "proto/schema.zap:Type.interface",
     dataWordCount = 2,
     pointerCount = 1,
     isGroup = true,
@@ -2177,7 +2177,7 @@ _M.Type.interface = {
 }
 _M.Value = {
     id = 14853958794117909659,
-    displayName = "proto/schema.capnp:Value",
+    displayName = "proto/schema.zap:Value",
     dataWordCount = 2,
     pointerCount = 1,
     discriminantCount = 19,
@@ -2572,7 +2572,7 @@ _M.Value = {
 }
 _M.Annotation = {
     id = 17422339044421236034,
-    displayName = "proto/schema.capnp:Annotation",
+    displayName = "proto/schema.zap:Annotation",
     dataWordCount = 1,
     pointerCount = 1,
     calc_size_struct = function(data)
@@ -2694,7 +2694,7 @@ _M.ElementSizeStr = {
 }
 _M.CodeGeneratorRequest = {
     id = 13818529054586492878,
-    displayName = "proto/schema.capnp:CodeGeneratorRequest",
+    displayName = "proto/schema.zap:CodeGeneratorRequest",
     dataWordCount = 0,
     pointerCount = 2,
     calc_size_struct = function(data)
@@ -2730,7 +2730,7 @@ _M.CodeGeneratorRequest = {
             local data_off = get_data_off(_M.CodeGeneratorRequest, 0, pos)
 
             -- write tag
-            capnp.write_composite_tag(buf + pos, _M.Node, num)
+            zap.write_composite_tag(buf + pos, _M.Node, num)
             pos = pos + 8 -- tag
 
             -- write data
@@ -2746,7 +2746,7 @@ _M.CodeGeneratorRequest = {
             local data_off = get_data_off(_M.CodeGeneratorRequest, 1, pos)
 
             -- write tag
-            capnp.write_composite_tag(buf + pos, _M.CodeGeneratorRequest.RequestedFile, num)
+            zap.write_composite_tag(buf + pos, _M.CodeGeneratorRequest.RequestedFile, num)
             pos = pos + 8 -- tag
 
             -- write data
@@ -2784,7 +2784,7 @@ _M.CodeGeneratorRequest = {
         local off, size, words = parse_listp_buf(buf, header, _M.CodeGeneratorRequest, 0)
         if off and words then
             local start = (0 + 0 + 1 + off) * 2-- dataWordCount + offset + pointerSize + off
-            local num, dt, pt = capnp.read_composite_tag(buf + start)
+            local num, dt, pt = zap.read_composite_tag(buf + start)
             start = start + 2 -- 2 * 32bit
             if not s.nodes then
                 s.nodes = new_tab(num, 0)
@@ -2803,7 +2803,7 @@ _M.CodeGeneratorRequest = {
         local off, size, words = parse_listp_buf(buf, header, _M.CodeGeneratorRequest, 1)
         if off and words then
             local start = (0 + 1 + 1 + off) * 2-- dataWordCount + offset + pointerSize + off
-            local num, dt, pt = capnp.read_composite_tag(buf + start)
+            local num, dt, pt = zap.read_composite_tag(buf + start)
             start = start + 2 -- 2 * 32bit
             if not s.requestedFiles then
                 s.requestedFiles = new_tab(num, 0)
@@ -2852,7 +2852,7 @@ _M.CodeGeneratorRequest = {
 }
 _M.CodeGeneratorRequest.RequestedFile = {
     id = 14981803260258615394,
-    displayName = "proto/schema.capnp:CodeGeneratorRequest.RequestedFile",
+    displayName = "proto/schema.zap:CodeGeneratorRequest.RequestedFile",
     dataWordCount = 1,
     pointerCount = 2,
     calc_size_struct = function(data)
@@ -2898,7 +2898,7 @@ _M.CodeGeneratorRequest.RequestedFile = {
             local data_off = get_data_off(_M.CodeGeneratorRequest.RequestedFile, 1, pos)
 
             -- write tag
-            capnp.write_composite_tag(buf + pos, _M.CodeGeneratorRequest.RequestedFile.Import, num)
+            zap.write_composite_tag(buf + pos, _M.CodeGeneratorRequest.RequestedFile.Import, num)
             pos = pos + 8 -- tag
 
             -- write data
@@ -2944,7 +2944,7 @@ _M.CodeGeneratorRequest.RequestedFile = {
         local off, size, words = parse_listp_buf(buf, header, _M.CodeGeneratorRequest.RequestedFile, 1)
         if off and words then
             local start = (1 + 1 + 1 + off) * 2-- dataWordCount + offset + pointerSize + off
-            local num, dt, pt = capnp.read_composite_tag(buf + start)
+            local num, dt, pt = zap.read_composite_tag(buf + start)
             start = start + 2 -- 2 * 32bit
             if not s.imports then
                 s.imports = new_tab(num, 0)
@@ -2993,7 +2993,7 @@ _M.CodeGeneratorRequest.RequestedFile = {
 }
 _M.CodeGeneratorRequest.RequestedFile.Import = {
     id = 12560611460656617445,
-    displayName = "proto/schema.capnp:CodeGeneratorRequest.RequestedFile.Import",
+    displayName = "proto/schema.zap:CodeGeneratorRequest.RequestedFile.Import",
     dataWordCount = 1,
     pointerCount = 1,
     calc_size_struct = function(data)

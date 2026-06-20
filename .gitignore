@@ -18,22 +18,27 @@
 
 # Project temp files
 *.data
-proto/example.capnp.c++
-proto/*.capnp.h
-proto/*.capnp.c++
-proto/*_capnp.lua
-proto/*_capnp.llua
-#proto/enums.capnp.h
+proto/example.zap.c++
+proto/*.zap.h
+proto/*.zap.c++
+proto/*_zap.lua
+proto/*_zap.llua
+#proto/enums.zap.h
 test.schema.txt
 main
 *.bak
 test.schema.lua
 CLIP
-example_capnp.lua
+example_zap.lua
 data_generator.lua
 *.json
 *.log
 *.bin
 
-lua-capnproto-*.rockspec
+# luarocks pack output at repo root (Makefile writes lua-zap-<ver>.rockspec here);
+# the canonical specs under rockspec/ are tracked.
+/lua-zap-*.rockspec
 *.src.rock
+
+# test artifact written by tests/10-encode-decode.lua
+/dump

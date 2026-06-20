@@ -1,6 +1,6 @@
-#include "example.capnp.h"
-#include <capnp/message.h>
-#include <capnp/serialize-packed.h>
+#include "example.zap.h"
+#include <zap/message.h>
+#include <zap/serialize-packed.h>
 #include <iostream>
 #include <stdio.h>
 #include <unistd.h>
@@ -8,10 +8,10 @@
 
 
 void writeT1(int fd) {
-    ::capnp::MallocMessageBuilder message;
+    ::zap::MallocMessageBuilder message;
 
     T1::Builder t1 = message.initRoot<T1>();
-    //::capnp::List<Person>::Builder people = addressBook.initPeople(2);
+    //::zap::List<Person>::Builder people = addressBook.initPeople(2);
     t1.setI0(32);
     t1.setI1(16);
     t1.setB0(true);
@@ -23,13 +23,13 @@ void writeT1(int fd) {
     t2.setF0(3.14);
     t2.setF1(3.14159265358979);
 
-    ::capnp::List< ::int8_t>::Builder l0 = t1.initL0(2);
+    ::zap::List< ::int8_t>::Builder l0 = t1.initL0(2);
     l0.set(0, 28);
     l0.set(1, 29);
 
     t1.setT0("hello");
     const char *str = "\1\2\3\4\5\6\7";
-    t1.setD0(::capnp::Data::Reader(reinterpret_cast<const ::capnp::byte*>(str),
+    t1.setD0(::zap::Data::Reader(reinterpret_cast<const ::zap::byte*>(str),
                 strlen(str)));
 
     t1.setE1(::EnumType2::ENUM7);
@@ -44,7 +44,7 @@ void writeT1(int fd) {
     T1::U0::Ug0::Builder ug0 = u0.initUg0();
     ug0.setUgu0(32);
 
-    ::capnp::List< ::T1::T2>::Builder ls0 = t1.initLs0(2);
+    ::zap::List< ::T1::T2>::Builder ls0 = t1.initLs0(2);
     ls0[0].setF0(0.61803398875);
     ls0[0].setF1(1.61803398875);
     ls0[1].setF0(2.71828182846);
@@ -54,7 +54,7 @@ void writeT1(int fd) {
     //o0.setUv1();
     //o0.set(0, 2);
 
-    ::capnp::List< ::capnp::Text>::Builder lt0 = t1.initLt0(2);
+    ::zap::List< ::zap::Text>::Builder lt0 = t1.initLt0(2);
     lt0.set(0, "foo");
     lt0.set(1, "bar");
 
@@ -62,7 +62,7 @@ void writeT1(int fd) {
 }
 
 void readT1(int fd) {
-    ::capnp::StreamFdMessageReader message(fd);
+    ::zap::StreamFdMessageReader message(fd);
     T1::Reader t1 = message.getRoot<T1>();
 
     printf("%d\n", t1.getI0());

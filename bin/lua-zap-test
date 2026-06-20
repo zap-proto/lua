@@ -1,8 +1,8 @@
 #!/usr/bin/env luajit
 
-local test = require("test_capnp")
+local test = require("test_zap")
 local cjson = require("cjson")
-local util = require("capnp.util")
+local util = require("zap.util")
 
 local insert = table.insert
 local concat = table.concat
@@ -24,7 +24,7 @@ local type_map = {
     constTest               = "SimpleTestStruct",
 }
 
-local proto_file = "test.capnp"
+local proto_file = "test.zap"
 local proto
 
 
@@ -41,7 +41,7 @@ function get_input(test_case)
         str = string.gsub(str, s, _2)
         --print(start, stop, const, _2, str)
     end
-    local lua_str = util.parse_capnp_txt(str)
+    local lua_str = util.parse_zap_txt(str)
     --util.write_file(lua_str)
     return assert(loadstring(lua_str)())
 end

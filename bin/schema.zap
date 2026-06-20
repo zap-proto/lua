@@ -21,10 +21,10 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-using Cxx = import "c++.capnp";
+using Cxx = import "c++.zap";
 
 @0xa93fc509624c72d9;
-$Cxx.namespace("capnp::schema");
+$Cxx.namespace("zap::schema");
 
 using Id = UInt64;
 # The globally-unique ID of a file, type, or annotation.
@@ -214,7 +214,7 @@ struct Field {
     # The original ordinal number given to the field.  You probably should NOT use this; if you need
     # a numeric identifier for a field, use its position within the field array for its scope.
     # The ordinal is given here mainly just so that the original schema text can be reproduced given
-    # the compiled version -- i.e. so that `capnp compile -ocapnp` can do its job.
+    # the compiled version -- i.e. so that `zap compile -ozap` can do its job.
   }
 }
 

@@ -1,10 +1,12 @@
-* performance turning
-* multiple files input
-* make capnpc-llua work
-* fix 0-item list
-* calculate new_tab arguments
-* AnyPointer support
-* uInt8DefaultValueTest decoding test case
-* packing/unpacking
-* compatibility with old formats
-* support writing non-cdata 64 bit number
+Remaining work (verified against the current runtime + compiler):
+
+* AnyPointer: a set/non-nil AnyPointer field is not encoded as a pointer and is
+  never decoded (an unset AnyPointer round-trips as nil, which works). Needs an
+  opaque-pointer representation + sub-message copy to be complete.
+* packing/unpacking: the stream codec is unpacked only; packed serialization is
+  not implemented in the Lua runtime.
+* old-format compatibility: lua/schema_zap.lua is a stale generated artifact and
+  does not round-trip a CodeGeneratorRequest from a current ZAP compiler;
+  regenerate it once packed/AnyPointer land.
+* multiple input files in one compile invocation.
+* performance tuning (e.g. precompute new_tab argument hints in generated code).

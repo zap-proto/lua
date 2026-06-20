@@ -1,6 +1,6 @@
-local util = require "capnp.util"
+local util = require "zap.util"
 local lunit = require "lunitx"
-local hw_capnp = require "handwritten_capnp"
+local hw_zap = require "handwritten_zap"
 
 if _VERSION >= 'Lua 5.2' then
     _ENV = lunit.module('simple','seeall')
@@ -31,7 +31,7 @@ end
 
 
 function test_to_text()
-    local T1 = hw_capnp.T1
+    local T1 = hw_zap.T1
     local val = {
         b0 = true, -- default 0
         db0 = true, -- default 1
@@ -41,7 +41,7 @@ function test_to_text()
 end
 
 function test_to_text1()
-    local T1 = hw_capnp.T1
+    local T1 = hw_zap.T1
     local val = {
         b0 = false, -- default 0
         db0 = false, -- default 1

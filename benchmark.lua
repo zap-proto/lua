@@ -2,11 +2,11 @@ jit.opt.start("loopunroll=1000", "maxrecord=5000", "maxmcode=1024")
 
 package.path = "lua/?.lua;proto/?.lua;" .. package.path
 
-local test_capnp    = require "handwritten_capnp"
+local test_zap    = require "handwritten_zap"
 
 local ffi           = require "ffi"
-local test_capnp    = require "handwritten_capnp"
-local capnp         = require "capnp"
+local test_zap    = require "handwritten_zap"
+local zap         = require "zap"
 local cjson         = require "cjson"
 
 local times         = arg[1] or 1000000
@@ -28,18 +28,18 @@ local data = {
     e1 = "enum7",
 }
 
-local size = test_capnp.T1.calc_size(data)
+local size = test_zap.T1.calc_size(data)
 local buf = ffi.new("char[?]", size)
-local bin = test_capnp.T1.serialize(data)
+local bin = test_zap.T1.serialize(data)
 local json_data = cjson.encode(data)
 local tab = {}
 
 function run4()
-    return test_capnp.T1.serialize(data, buf, size)
+    return test_zap.T1.serialize(data, buf, size)
 end
 
 function run3()
-    return test_capnp.T1.serialize(data)
+    return test_zap.T1.serialize(data)
 end
 
 function run2()
@@ -51,7 +51,7 @@ function run4()
 end
 
 function run1()
-    return test_capnp.T1.parse(bin, tab)
+    return test_zap.T1.parse(bin, tab)
 end
 
 print("Benchmarking ", times .. " times.")
@@ -69,9 +69,9 @@ function bench(name, func)
 end
 
 bench("cjson encode", run2)
-bench("capnp encode", run3)
+bench("zap encode", run3)
 bench("cjson decode", run4)
---bench("capnp-noalloc", run4)
-bench("capnp decode", run1)
+--bench("zap-noalloc", run4)
+bench("zap decode", run1)
 
 --print(cjson.encode(res))

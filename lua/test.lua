@@ -1,13 +1,13 @@
---local test_capnp = require "handwritten_capnp"
+--local test_zap = require "handwritten_zap"
 --package.path = "lua/?.lua;proto/?.lua;" .. package.path
 
 local data_generator = require "data_generator"
-local example_capnp = require "example_capnp"
-local handwritten_capnp = require "handwritten_capnp"
--- local log_capnp = require "log_capnp"
-local capnp = require "capnp"
+local example_zap = require "example_zap"
+local handwritten_zap = require "handwritten_zap"
+-- local log_zap = require "log_zap"
+local zap = require "zap"
 local cjson = require "cjson"
-local util = require "capnp.util"
+local util = require "zap.util"
 
 
 
@@ -56,9 +56,9 @@ local data = {
 
 local file = arg[1]
 local f = io.open(file, "w")
-local bin = handwritten_capnp.T1.serialize(data)
+local bin = handwritten_zap.T1.serialize(data)
 
-local decoded = handwritten_capnp.T1.parse(bin)
+local decoded = handwritten_zap.T1.parse(bin)
 
 util.table_diff(data, decoded)
 
@@ -77,18 +77,18 @@ end
 function random_test()
     local generated_data = data_generator.gen_log()
 
-    local bin = log_capnp.Log.serialize(generated_data)
+    local bin = log_zap.Log.serialize(generated_data)
 
     local outfile = "/tmp/Log.txt"
     os.execute("rm " .. outfile)
-    local fh = assert(io.popen("capnp decode /home/calio/code/dollar-store-fork/proto/log.capnp Log > "
+    local fh = assert(io.popen("zap decode /home/calio/code/dollar-store-fork/proto/log.zap Log > "
             .. outfile, "w"))
     fh:write(bin)
     fh:close()
 
-    write_file("Log.capnp.bin", bin)
+    write_file("Log.zap.bin", bin)
 
-    local decoded = util.parse_capnp_decode(outfile, "debug.txt")
+    local decoded = util.parse_zap_decode(outfile, "debug.txt")
 
     print(cjson.encode(generated_data))
     print(cjson.encode(decoded))

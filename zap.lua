@@ -1,5 +1,5 @@
 -----------------------------------------------------------
--- lua-capnproto runtime module.
+-- lua-zap runtime module.
 -- @copyright 2013-2014 Jiale Zhi (vipcalio@gmail.com)
 -----------------------------------------------------------
 
@@ -78,9 +78,9 @@ local function get_bit_offset(bit_off, size)
     return n, s
 end
 
---- Get a pointer cdata from a int32 pointer and a Cap'n Proto type
+--- Get a pointer cdata from a int32 pointer and a ZAP type
 -- @param p32           int32 pointer
--- @param field_type    Cap'n Proto type string
+-- @param field_type    ZAP type string
 -- @return              pointer cdata
 local function get_pointer_from_type(p32, field_type)
     local t = pointer_map[field_type]
@@ -412,7 +412,7 @@ function _M.write_listp_buf(p32, T, offset, size_type, num, data_off)
 end
 
 --- map size type to its size
--- @see http://kentonv.github.io/_Mroto/encoding.html#lists
+-- @see https://zap-proto.io/encoding#lists
 local list_size_map = {
     [0] = 0,
     [1] = 0.125,
@@ -546,7 +546,7 @@ end
 
 --- read data part of a list
 -- @param p           start of data buffer
--- @param header      stream header, see http://kentonv.github.io/capnproto/encoding.html#serialization_over_a_stream
+-- @param header      stream header, see https://zap-proto.io/encoding#serialization_over_a_stream
 -- @param num         number of elements in this list
 -- @param elm_type    elememt type: "int32", "data", "list", etc.
 function _M.read_list_data(p32, header, num, elm_type, ...)

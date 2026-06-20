@@ -1,7 +1,7 @@
-local addressBook = require "AddressBook_capnp"
-local capnp = require "capnp"
+local addressBook = require "AddressBook_zap"
+local zap = require "zap"
 local cjson = require "cjson"
-local util = require "capnp.util"
+local util = require "zap.util"
 
 local data = {
     people = {
