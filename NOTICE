@@ -1,0 +1,10 @@
+lua — part of the ZAP Protocol (github.com/zap-proto)
+
+This product includes software developed by the lua-capnproto project:
+  lua-capnproto — https://github.com/cloudflare/lua-capnproto
+  Copyright (c) 2013 Jiale Zhi (and Cloudflare, Inc.)
+  Licensed under the BSD 2-Clause License (see LICENSE).
+
+ZAP is a derivative work: a brand-neutral fork of lua-capnproto providing a
+pure LuaJIT implementation of the ZAP serialization format and RPC system.
+Modifications Copyright (c) 2025 Lux Industries Inc.
