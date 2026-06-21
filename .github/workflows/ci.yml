@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request: {}
+  workflow_dispatch: {}
+
+jobs:
+  test:
+    name: build + test (LuaJIT)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install toolchain
+        run: |
+          sudo apt-get update
+          # luajit  : the runtime this binding targets (needs ffi)
+          # luarocks: Lua package manager
+          # capnproto: schema front-end used to generate the test fixture
+          sudo apt-get install -y luajit luarocks capnproto
+
+      - name: Install lunitx
+        run: sudo luarocks install lunitx
+
+      - name: Show versions
+        run: |
+          luajit -v
+          luarocks --version
+          capnp --version
+
+      - name: Load module
+        run: |
+          LUA_PATH="$PWD/?.lua;$PWD/lua/?.lua;$PWD/vendor/?.lua;;" \
+            luajit -e "require 'zap'; require 'zap.util'; require 'zap.compile'; print('zap module loaded')"
+
+      - name: Run tests
+        run: ./test.sh

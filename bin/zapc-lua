@@ -58,7 +58,8 @@ BASE=$(dirname $(realpath $0))
 luajit - <(cat - | zap decode $BASE/schema.zap CodeGeneratorRequest) $@ <<EOT
 local compile = require ("zap.compile")
 local util = require ("zap.util")
-local cjson = require ("cjson")
+-- cjson is only used for an optional --verbose schema dump; not required to run.
+local has_cjson, cjson = pcall(require, "cjson")
 
 local format = string.format
 local insert = table.insert
@@ -116,7 +117,7 @@ local schema = assert(assert(loadstring(lua_schema))())
 
 schema.__compiler = "lua-zap(decoded by zap tool)"
 
-if debug then
+if debug and has_cjson then
     print("write schema_json_file")
     util.write_file(schema_json_file, cjson.encode(schema))
 end
